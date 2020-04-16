@@ -1,10 +1,11 @@
 import React from "react";
-import logo from "./logo.svg";
+import Moment from "moment";
+
 import "./App.css";
+import logo from "./logo.svg";
 
 import Hero from "./components/Hero";
 import Filters from "./components/Filters";
-
 
 class App extends React.Component {
   constructor(props) {
@@ -30,6 +31,11 @@ class App extends React.Component {
         "Hoteles desde el martes, 1 de enero de 2019 hasta el miércoles, 2 de enero de 2019 en Argentina por $$ de hasta 10 habitaciones.",
     });
   };
+  handleFilterChange = (payload) => {
+    this.setState({
+      filters: payload
+    })
+  }
   componentDidMount() {
     fetch(
       "https://wt-8a099f3e7c73b2d17f4e018b6cfd6131-0.sandbox.auth0-extend.com/acamica"
@@ -55,16 +61,13 @@ class App extends React.Component {
     );
   }
   render() {
-    const {title, searchDescription, filters } = this.state;
+    const { title, searchDescription, filters } = this.state;
     //      <Hero filters={ filters } />
     //      <Filters filters={ filters } />
     return (
       <div className="App">
-        <Hero
-          title={title}
-          description={searchDescription}
-        />
-        <Filters  {...filters}/>
+        <Hero {...filters} />
+        <Filters {...filters} onFilterChange={this.handleFilterChange}/>
       </div>
     );
   }

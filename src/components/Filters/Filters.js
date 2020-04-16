@@ -1,19 +1,47 @@
 import React from "react";
 
-import DateFilter from "./DateFilter";
+import DateFilter from "./OptionsFilter";
 import OptionsFilter from "./OptionsFilter";
 
-export default Filters = ({ title, description }) => {
+export default function Filters({
+  dateFrom,
+  dateTo,
+  country,
+  price,
+  rooms,
+  onFilterChange,
+}) {
+  const handleOptionsChange = (event) => {
+    let payload = this.props.filters;
+    payload[event.target.name] = event.target.value;
+
+    this.props.onFilterChange(payload);
+  };
+  const handleDateChange = (event) => {
+    let payload = this.props.filters;
+    payload[event.target.name] = event.target.value;
+
+    this.props.onFilterChange(payload);
+  };
   return (
     <nav className="navbar is-info" style={{ justifyContent: "center" }}>
       <div className="navbar-item">
-        <DateFilter date={props.filters.dateFrom} icon="sign-in-alt" />
+        <DateFilter
+          date={dateFrom}
+          icon="sign-in-alt"
+          onDateChange={handleDateChange}
+        />
       </div>
       <div className="navbar-item">
-        <DateFilter date={props.filters.dateTo} icon="sign-out-alt" />
+        <DateFilter
+          date={dateTo}
+          icon="sign-out-alt"
+          onDateChange={handleDateChange}
+        />
       </div>
       <div className="navbar-item">
         <OptionsFilter
+          onOptionsChange={handleOptionsChange}
           options={[
             { value: undefined, name: "Todos los países" },
             { value: "Argentina", name: "Argentina" },
@@ -21,12 +49,13 @@ export default Filters = ({ title, description }) => {
             { value: "Chile", name: "Chile" },
             { value: "Uruguay", name: "Uruguay" },
           ]}
-          selected={props.filters.country}
+          selected={country}
           icon="globe"
         />
       </div>
       <div className="navbar-item">
         <OptionsFilter
+          onOptionsChange={handleOptionsChange}
           options={[
             { value: undefined, name: "Cualquier precio" },
             { value: 1, name: "$" },
@@ -34,22 +63,23 @@ export default Filters = ({ title, description }) => {
             { value: 3, name: "$$$" },
             { value: 4, name: "$$$$" },
           ]}
-          selected={props.filters.price}
+          selected={price}
           icon="dollar-sign"
         />
       </div>
       <div className="navbar-item">
         <OptionsFilter
+          onOptionsChange={handleOptionsChange}
           options={[
             { value: undefined, name: "Cualquier tamaño" },
             { value: 10, name: "Hotel pequeño" },
             { value: 20, name: "Hotel mediano" },
             { value: 30, name: "Hotel grande" },
           ]}
-          selected={props.filters.rooms}
+          selected={rooms}
           icon="bed"
         />
       </div>
     </nav>
   );
-};
+}

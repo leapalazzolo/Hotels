@@ -1,13 +1,13 @@
-import React from "./node_modules/react";
+import React from "react";
 
-export default Hero = ({ title, description }) => {
+export default function Hero ({ dateFrom, dateTo, country, price, rooms }) {
   return (
     <section className="hero is-primary">
       <div className="hero-body">
         <div className="container">
-          <h1 className="title">{title}</h1>
-          <h2 className="subtitle">Î
-            {description}
+          <h1 className="title">{dateFrom}</h1>
+          <h2 className="subtitle">
+            {dateTo}
           </h2>
         </div>
       </div>
