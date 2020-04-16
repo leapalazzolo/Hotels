@@ -6,6 +6,8 @@ import logo from "./logo.svg";
 
 import Hero from "./components/Hero";
 import Filters from "./components/Filters";
+import Hotels from "./components/Hotels";
+import hotelsData from "./assets/scripts/data";
 
 class App extends React.Component {
   constructor(props) {
@@ -33,9 +35,9 @@ class App extends React.Component {
   };
   handleFilterChange = (payload) => {
     this.setState({
-      filters: payload
-    })
-  }
+      filters: payload,
+    });
+  };
   componentDidMount() {
     fetch(
       "https://wt-8a099f3e7c73b2d17f4e018b6cfd6131-0.sandbox.auth0-extend.com/acamica"
@@ -66,8 +68,9 @@ class App extends React.Component {
     //      <Filters filters={ filters } />
     return (
       <div className="App">
-        <Hero {...filters} />
-        <Filters {...filters} onFilterChange={this.handleFilterChange}/>
+        <Hero filters={filters} />
+        <Filters filters={filters} onFilterChange={this.handleFilterChange} />
+        <Hotels data={hotelsData[0]} />
       </div>
     );
   }

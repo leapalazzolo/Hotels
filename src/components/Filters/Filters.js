@@ -3,14 +3,8 @@ import React from "react";
 import DateFilter from "./OptionsFilter";
 import OptionsFilter from "./OptionsFilter";
 
-export default function Filters({
-  dateFrom,
-  dateTo,
-  country,
-  price,
-  rooms,
-  onFilterChange,
-}) {
+export default function Filters({ filters, onFilterChange }) {
+  const { dateFrom, dateTo, country, price, rooms } = this.props;
   const handleOptionsChange = (event) => {
     let payload = this.props.filters;
     payload[event.target.name] = event.target.value;
