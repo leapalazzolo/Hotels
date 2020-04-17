@@ -2,15 +2,15 @@ import React from "react";
 
 import Hotel from "../Hotel";
 
-export default function Hotels(data) {
-  const { data } = this.props;
+export default function Hotels(props) {
+  const { data } = props;
   return (
     <section className="section" style={{ marginTop: "3em" }}>
       <div className="container">
         <div className="columns is-multiline">
           {data ? (
             data.map((hotel) => {
-              <div className="column is-one-third">
+              return <div className="column is-one-third">
                 <Hotel {...hotel} />
               </div>;
             })

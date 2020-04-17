@@ -221,3 +221,5 @@ const hotelsData = [
     price: 1
   }
 ]
+
+export default hotelsData;

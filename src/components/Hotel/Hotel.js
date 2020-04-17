@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Hotel({
+const Hotel = ({
   slug,
   name,
   photo,
@@ -11,8 +11,7 @@ export default function Hotel({
   city,
   country,
   price,
-}) {
-  //const { dateFrom, dateTo, country, price, rooms } = this.props;
+}) => {
   return (
     <div className="card">
       <div className="card-image">
@@ -33,7 +32,7 @@ export default function Hotel({
                 <i className="fas fa-map-marker"></i>
               </span>
               {city && country && (
-                <span className="tag is-medium">{city + "," + country}</span>
+                <span className="tag is-medium">{city + ", " + country}</span>
               )}
             </div>
           </div>
@@ -42,7 +41,7 @@ export default function Hotel({
               <span className="tag is-medium is-info">
                 <i className="fas fa-bed"></i>
               </span>
-              <span className="tag is-medium">{rooms}}</span>
+              <span className="tag is-medium">{rooms}</span>
             </div>
           </div>
           <div className="control">
@@ -79,4 +78,6 @@ export default function Hotel({
       </div>
     </div>
   );
-}
+};
+
+export default Hotel;

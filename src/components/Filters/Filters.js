@@ -1,21 +1,26 @@
 import React from "react";
 
-import DateFilter from "./OptionsFilter";
+import DateFilter from "./DateFilter";
 import OptionsFilter from "./OptionsFilter";
 
-export default function Filters({ filters, onFilterChange }) {
-  const { dateFrom, dateTo, country, price, rooms } = this.props;
+const Filters = (props) => {
+  const {
+    dateFrom,
+    dateTo,
+    country,
+    price,
+    rooms,
+  } = props.filters;
+  const {onFilterChange} = props;
   const handleOptionsChange = (event) => {
-    let payload = this.props.filters;
+    const payload = props.filters;
     payload[event.target.name] = event.target.value;
-
-    this.props.onFilterChange(payload);
+    onFilterChange(payload);
   };
   const handleDateChange = (event) => {
-    let payload = this.props.filters;
+    const payload = props.filters;
     payload[event.target.name] = event.target.value;
-
-    this.props.onFilterChange(payload);
+    onFilterChange(payload);
   };
   return (
     <nav className="navbar is-info" style={{ justifyContent: "center" }}>
@@ -77,3 +82,5 @@ export default function Filters({ filters, onFilterChange }) {
     </nav>
   );
 }
+
+export default Filters;

@@ -14,13 +14,11 @@ export default function OptionFilter({
     <div className="field">
       <div className="control has-icons-left">
         <div className="select" style={{ width: "100%" }}>
-          <select
-            style={{ width: "100%" }}
-            onSelect={handleOptionsChange}
-            value={options}
-            name={name}
-          >
-            ...
+          <select style={{ width: "100%" }} onChange={handleOptionsChange}>
+            {options &&
+              options.map((option) => {
+                return <option value={option.value}>{option.name}</option>;
+              })}
           </select>
         </div>
         <div className="icon is-small is-left">

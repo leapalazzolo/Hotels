@@ -63,14 +63,12 @@ class App extends React.Component {
     );
   }
   render() {
-    const { title, searchDescription, filters } = this.state;
-    //      <Hero filters={ filters } />
-    //      <Filters filters={ filters } />
+    const { title, searchDescription, filters, hotels } = this.state;
     return (
       <div className="App">
         <Hero filters={filters} />
         <Filters filters={filters} onFilterChange={this.handleFilterChange} />
-        <Hotels data={hotelsData[0]} />
+        <Hotels data={hotels} />
       </div>
     );
   }
