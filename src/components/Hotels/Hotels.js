@@ -10,7 +10,7 @@ export default function Hotels(props) {
         <div className="columns is-multiline">
           {data ? (
             data.map((hotel) => {
-              return <div className="column is-one-third">
+              return <div key={hotel.slug} className="column is-one-third">
                 <Hotel {...hotel} />
               </div>;
             })
