@@ -5,7 +5,6 @@ import OptionsFilter from "./OptionsFilter";
 
 const Filters = ({filters, dateLimits, onFilterChange, countries, prices, rooms}) => {
   const { dateFrom, dateTo } = filters;
-  console.log(countries, rooms, prices);
   const handleOptionsChange = (event) => {
     const payload = filters;
     payload[event.target.name] = event.target.value;

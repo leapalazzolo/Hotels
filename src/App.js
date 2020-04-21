@@ -8,6 +8,7 @@ import logo from "./logo.svg";
 import Hero from "./components/Hero";
 import Filters from "./components/Filters";
 import Hotels from "./components/Hotels";
+import Loader from "./components/Loader";
 
 class App extends React.Component {
   constructor(props) {
@@ -96,12 +97,15 @@ class App extends React.Component {
   };
   componentDidMount() {
     this.updateDateToLimits();
+    console.log(this.state.isAllLoaded);
     fetch(
       "https://wt-8a099f3e7c73b2d17f4e018b6cfd6131-0.sandbox.auth0-extend.com/acamica"
     )
       .then((hotels) => hotels.json())
       .then((hotels) => {
-        const prices = [], countries = [], rooms = [];
+        const prices = [],
+          countries = [],
+          rooms = [];
         hotels.map((hotel) => {
           if (!prices.includes(hotel.price)) prices.push(hotel.price);
           if (!countries.includes(hotel.country)) countries.push(hotel.country);
@@ -112,9 +116,11 @@ class App extends React.Component {
           isAllLoaded: true,
           prices: prices,
           countries: countries,
-          rooms: rooms
+          rooms: rooms,
         });
         this.filterHotels();
+
+        console.log(this.state.isAllLoaded);
       })
       .catch((e) => console.log("Error en la petición..." + e));
   }
@@ -128,15 +134,28 @@ class App extends React.Component {
     );
   }
   render() {
-    const { title, filters, filteredHotels, dateLimits, countries, prices, rooms } = this.state;
+    const {
+      title,
+      filters,
+      filteredHotels,
+      dateLimits,
+      countries,
+      prices,
+      rooms,
+      isAllLoaded,
+    } = this.state;
     return (
       <div className="App">
         <Hero {...{ title, ...filters }} />
         <Filters
-          {...{filters, dateLimits, prices, countries, rooms}}
+          {...{ filters, dateLimits, prices, countries, rooms }}
           onFilterChange={this.handleFilterChange}
         />
-        <Hotels data={filteredHotels} />
+        {!isAllLoaded ? (
+          <Loader />
+        ) : (
+          <Hotels data={filteredHotels} />
+        )}
       </div>
     );
   }
