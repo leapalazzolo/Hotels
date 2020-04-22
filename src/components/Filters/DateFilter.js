@@ -19,7 +19,7 @@ const DateFilter = ({ date, icon, name, onDateChange, dateLimits }) => {
           name={name}
         />
         <span className="icon is-small is-left">
-          <i className={`fas ${icon}`}></i>
+          <i className={`fas fa-${icon}`}></i>
         </span>
       </div>
     </div>

@@ -150,24 +150,15 @@ class App extends React.Component {
           countries: countries,
         });
         this.filterHotels();
-
         this.generateOptions();
       })
       .catch((e) => {
         this.setState({
-          error: true,
+          errorApi: true,
         });
       });
   }
-  warning() {
-    return (
-      <article className="message is-warning">
-        <div className="message-body">
-          No se han encontrado hoteles con los criterios definidos
-        </div>
-      </article>
-    );
-  }
+
   render() {
     const {
       title,

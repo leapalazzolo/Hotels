@@ -28,7 +28,7 @@ const OptionFilter = ({ options, icon, name, onOptionsChange }) => {
           </select>
         </div>
         <div className="icon is-small is-left">
-          <i className={`fas ${icon}`}></i>
+          <i className={`fas fa-${icon}`}></i>
         </div>
       </div>
     </div>

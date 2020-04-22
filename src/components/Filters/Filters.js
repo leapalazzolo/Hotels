@@ -29,7 +29,7 @@ const Filters = ({
         <DateFilter
           name={"dateFrom"}
           date={dateFrom}
-          icon="fa-sign-in-alt"
+          icon="sign-in-alt"
           onDateChange={handleDateChange}
           dateLimits={dateLimits.dateFrom}
         />
@@ -38,7 +38,7 @@ const Filters = ({
         <DateFilter
           name={"dateTo"}
           date={dateTo}
-          icon="fa-sign-out-alt"
+          icon="sign-out-alt"
           onDateChange={handleDateChange}
           dateLimits={dateLimits.dateTo}
         />
@@ -48,7 +48,7 @@ const Filters = ({
           onOptionsChange={handleOptionsChange}
           name={"country"}
           options={countries}
-          icon={"fa-globe"}
+          icon={"globe"}
         />
       </div>
       <div className="navbar-item">
@@ -56,7 +56,7 @@ const Filters = ({
           onOptionsChange={handleOptionsChange}
           name={"price"}
           options={prices}
-          icon={"fa-dollar-sign"}
+          icon={"dollar-sign"}
         />
       </div>
       <div className="navbar-item">
@@ -64,7 +64,7 @@ const Filters = ({
           onOptionsChange={handleOptionsChange}
           name={"rooms"}
           options={rooms}
-          icon={"fa-bed"}
+          icon={"bed"}
         />
       </div>
     </nav>

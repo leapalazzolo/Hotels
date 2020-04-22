@@ -1,17 +1,45 @@
 import React from "react";
 
+import Item from "../Item";
+
 const Hotel = ({
   slug,
   name,
   photo,
   description,
-  availabilityFrom,
-  availabilityTo,
   rooms,
   city,
   country,
   price,
 }) => {
+  generateLocationData = () => {
+    return city + ", " + country;
+  };
+  generateRoomsData = () => {
+    return rooms + " Habitaciones";
+  };
+  generatePriceData = () => {
+    const priceComponents = [...Array(4)].map((v, i) => {
+      if (price >= i + 1) {
+        return (
+          <i
+            key={`${slug}${i}`}
+            className="fas fa-dollar-sign"
+            style={{ margin: "0 .125em" }}
+          ></i>
+        );
+      } else {
+        return (
+          <i
+            key={`${slug}${i}`}
+            className="fas fa-dollar-sign"
+            style={{ margin: "0 .125em", opacity: ".25" }}
+          ></i>
+        );
+      }
+    });
+    return priceComponents;
+  };
   return (
     <div className="card">
       <div className="card-image">
@@ -26,16 +54,8 @@ const Hotel = ({
           className="field is-grouped is-grouped-multiline"
           style={{ marginTop: "1em" }}
         >
-          <div className="control">
-            <div className="tags has-addons">
-              <span className="tag is-medium is-info">
-                <i className="fas fa-map-marker"></i>
-              </span>
-              {city && country && (
-                <span className="tag is-medium">{city + ", " + country}</span>
-              )}
-            </div>
-          </div>
+          <Item icon={"map-marker"} data={generateLocation()} />
+          <Item icon={"bed"} data={generateRoomsData()} />
           <div className="control">
             <div className="tags has-addons">
               <span className="tag is-medium is-info">
@@ -72,10 +92,7 @@ const Hotel = ({
         </div>
       </div>
       <div className="card-footer">
-        <a
-          href="javascript:alert('No implementamos esto aún :(')"
-          className="card-footer-item has-background-primary has-text-white has-text-weight-bold"
-        >
+        <a className="card-footer-item has-background-primary has-text-white has-text-weight-bold">
           Reservar
         </a>
       </div>
