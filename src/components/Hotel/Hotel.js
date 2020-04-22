@@ -12,13 +12,9 @@ const Hotel = ({
   country,
   price,
 }) => {
-  generateLocationData = () => {
-    return city + ", " + country;
-  };
-  generateRoomsData = () => {
-    return rooms + " Habitaciones";
-  };
-  generatePriceData = () => {
+  const generateLocationData = () => city + ", " + country;
+  const generateRoomsData = () => rooms + " Habitaciones";
+  const generatePriceData = () => {
     const priceComponents = [...Array(4)].map((v, i) => {
       if (price >= i + 1) {
         return (
@@ -54,16 +50,8 @@ const Hotel = ({
           className="field is-grouped is-grouped-multiline"
           style={{ marginTop: "1em" }}
         >
-          <Item icon={"map-marker"} data={generateLocation()} />
+          <Item icon={"map-marker"} data={generateLocationData()} />
           <Item icon={"bed"} data={generateRoomsData()} />
-          <div className="control">
-            <div className="tags has-addons">
-              <span className="tag is-medium is-info">
-                <i className="fas fa-bed"></i>
-              </span>
-              <span className="tag is-medium">{rooms + " Habitaciones"}</span>
-            </div>
-          </div>
           <div className="control">
             <div className="tags">
               <span className="tag is-medium is-info">
