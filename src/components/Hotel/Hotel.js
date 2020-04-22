@@ -21,7 +21,7 @@ const Hotel = ({
       </div>
       <div className="card-content">
         <p className="title is-4">{name}</p>
-        <p>{name}</p>
+        <p>{description}</p>
         <div
           className="field is-grouped is-grouped-multiline"
           style={{ marginTop: "1em" }}
@@ -41,28 +41,31 @@ const Hotel = ({
               <span className="tag is-medium is-info">
                 <i className="fas fa-bed"></i>
               </span>
-              <span className="tag is-medium">{rooms}</span>
+              <span className="tag is-medium">{rooms + "Habitaciones"}</span>
             </div>
           </div>
           <div className="control">
             <div className="tags">
               <span className="tag is-medium is-info">
-                <i
-                  className="fas fa-dollar-sign"
-                  style={{ margin: "0 .125em" }}
-                ></i>
-                <i
-                  className="fas fa-dollar-sign"
-                  style={{ margin: "0 .125em" }}
-                ></i>
-                <i
-                  className="fas fa-dollar-sign"
-                  style={{ margin: "0 .125em", opacity: ".25" }}
-                ></i>
-                <i
-                  className="fas fa-dollar-sign"
-                  style={{ margin: "0 .125em", opacity: ".25" }}
-                ></i>
+                {[...Array(4)].map((v, i) => {
+                  if (price >= i + 1) {
+                    return (
+                      <i
+                        key={`${slug}${i}`}
+                        className="fas fa-dollar-sign"
+                        style={{ margin: "0 .125em" }}
+                      ></i>
+                    );
+                  } else {
+                    return (
+                      <i
+                        key={`${slug}${i}`}
+                        className="fas fa-dollar-sign"
+                        style={{ margin: "0 .125em", opacity: ".25" }}
+                      ></i>
+                    );
+                  }
+                })}
               </span>
             </div>
           </div>

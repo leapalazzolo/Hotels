@@ -2,17 +2,26 @@ import React from "react";
 
 import DateFilter from "./DateFilter";
 import OptionsFilter from "./OptionsFilter";
+import Moment from "moment";
 
-const Filters = ({filters, dateLimits, onFilterChange, countries, prices, rooms}) => {
+const Filters = ({
+  filters,
+  dateLimits,
+  onFilterChange,
+  countries,
+  prices,
+  rooms,
+}) => {
   const { dateFrom, dateTo } = filters;
   const handleOptionsChange = (event) => {
     const payload = filters;
-    payload[event.target.name] = event.target.value;
+    payload[event.target.name] = event.target.name === "country" ? event.target.value : +event.target.value;
+    console.log(payload);
     onFilterChange(payload);
   };
   const handleDateChange = (event) => {
     const payload = filters;
-    payload[event.target.name] = event.target.value;
+    payload[event.target.name] = Moment(event.target.value, "YYYY-MM-DD");
     onFilterChange(payload);
   };
   return (
@@ -39,41 +48,24 @@ const Filters = ({filters, dateLimits, onFilterChange, countries, prices, rooms}
         <OptionsFilter
           onOptionsChange={handleOptionsChange}
           name={"country"}
-          options={[
-            { value: null, name: "Todos los países" },
-            { value: "Argentina", name: "Argentina" },
-            { value: "Brasil", name: "Brasil" },
-            { value: "Chile", name: "Chile" },
-            { value: "Uruguay", name: "Uruguay" },
-          ]}
-          icon="globe"
+          options={countries}
+          icon={"fa-globe"}
         />
       </div>
       <div className="navbar-item">
         <OptionsFilter
           onOptionsChange={handleOptionsChange}
           name={"price"}
-          options={[
-            { value: null, name: "Cualquier precio" },
-            { value: 1, name: "$" },
-            { value: 2, name: "$$" },
-            { value: 3, name: "$$$" },
-            { value: 4, name: "$$$$" },
-          ]}
-          icon="dollar-sign"
+          options={prices}
+          icon={"fa-dollar-sign"}
         />
       </div>
       <div className="navbar-item">
         <OptionsFilter
           onOptionsChange={handleOptionsChange}
           name={"rooms"}
-          options={[
-            { value: null, name: "Cualquier tamaño" },
-            { value: 10, name: "Hotel pequeño" },
-            { value: 20, name: "Hotel mediano" },
-            { value: 30, name: "Hotel grande" },
-          ]}
-          icon="bed"
+          options={rooms}
+          icon={"fa-bed"}
         />
       </div>
     </nav>

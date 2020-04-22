@@ -32,12 +32,51 @@ class App extends React.Component {
         rooms: null,
       },
       hotels: [],
+      options: {
+        countries: [],
+        prices: [],
+        rooms: [],
+      },
       filteredHotels: [],
+      notFoundMessage:
+        "No se han encontrado hoteles que coincidan con los parámetros de búsqueda.",
       isAllLoaded: false,
       title: "Hotels",
-      subtitle: "",
     };
   }
+  generateOptions = () => {
+    const { countries, prices } = this.state;
+
+    const roomsFilter = [
+      { value: null, name: "Cualquier tamaño" },
+      { value: 10, name: "Hotel pequeño" },
+      { value: 20, name: "Hotel mediano" },
+      { value: 30, name: "Hotel grande" },
+    ];
+
+    const countriesFilter = countries.sort().map((country) => {
+      return {
+        name: country,
+        value: country,
+      };
+    });
+    const pricesFilter = prices.sort().map((price) => {
+      return {
+        value: price,
+        name: "$".repeat(price),
+      };
+    });
+
+    pricesFilter.unshift({ value: 0, name: "Cualquier precio" });
+    countriesFilter.unshift({ value: 0, name: "Todos los países" });
+    this.setState({
+      options: {
+        countries: countriesFilter,
+        prices: pricesFilter,
+        rooms: roomsFilter,
+      },
+    });
+  };
 
   updateDateToLimits = () => {
     const { dateFrom } = this.state.filters;
@@ -97,30 +136,26 @@ class App extends React.Component {
   };
   componentDidMount() {
     this.updateDateToLimits();
-    console.log(this.state.isAllLoaded);
     fetch(
       "https://wt-8a099f3e7c73b2d17f4e018b6cfd6131-0.sandbox.auth0-extend.com/acamica"
     )
       .then((hotels) => hotels.json())
       .then((hotels) => {
         const prices = [],
-          countries = [],
-          rooms = [];
+          countries = [];
         hotels.map((hotel) => {
           if (!prices.includes(hotel.price)) prices.push(hotel.price);
           if (!countries.includes(hotel.country)) countries.push(hotel.country);
-          if (!rooms.includes(hotel.rooms)) rooms.push(hotel.rooms);
         });
         this.setState({
           hotels: hotels,
           isAllLoaded: true,
           prices: prices,
           countries: countries,
-          rooms: rooms,
         });
         this.filterHotels();
 
-        console.log(this.state.isAllLoaded);
+        this.generateOptions();
       })
       .catch((e) => console.log("Error en la petición..." + e));
   }
@@ -139,27 +174,21 @@ class App extends React.Component {
       filters,
       filteredHotels,
       dateLimits,
-      countries,
-      prices,
-      rooms,
       isAllLoaded,
+      options,
+      notFoundMessage,
     } = this.state;
     return (
       <div className="App">
         <Hero {...{ title, ...filters }} />
         <Filters
-          {...{ filters, dateLimits, prices, countries, rooms }}
+          {...{ filters, dateLimits, ...options }}
           onFilterChange={this.handleFilterChange}
         />
-        {!isAllLoaded ? (
-          <Loader />
-        ) : (
-          <Hotels data={filteredHotels} />
-        )}
+        {!isAllLoaded ? <Loader /> : <Hotels data={filteredHotels} notFoundMessage={notFoundMessage}/>}
       </div>
     );
   }
-  s;
 }
 
 export default App;

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Loader = () => {
+const Error = ({ message }) => {
   return (
     <div className="columns is-mobile">
       <div className="column is-half is-offset-one-quarter">
@@ -12,4 +12,4 @@ const Loader = () => {
   );
 };
 
-export default Loader;
+export default Error;

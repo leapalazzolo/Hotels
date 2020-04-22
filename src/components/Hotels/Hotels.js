@@ -1,10 +1,9 @@
 import React from "react";
 
 import Hotel from "../Hotel";
+import PropTypes from "prop-types";
 
-export default function Hotels(props) {
-  const { data } = props;
-  console.log(data);
+const Hotels = ({ data, notFoundMessage }) => {
   return (
     <section className="section" style={{ marginTop: "1em" }}>
       <div className="container">
@@ -19,14 +18,17 @@ export default function Hotels(props) {
             })
           ) : (
             <article className="message is-warning">
-              <div className="message-body">
-                No se han encontrado hoteles que coincidan con los parámetros de
-                búsqueda.
-              </div>
-            </article>  
+              <div className="message-body">{notFoundMessage} </div>
+            </article>
           )}
         </div>
       </div>
     </section>
   );
-}
+};
+Hotels.propTypes = {
+  data: PropTypes.array.isRequired,
+  notFoundMessage: PropTypes.string.isRequired,
+};
+
+export default Hotels;
