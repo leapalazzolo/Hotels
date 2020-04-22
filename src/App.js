@@ -118,13 +118,16 @@ class App extends React.Component {
     const { hotels, filters } = this.state;
     const { dateFrom, dateTo, price, country, rooms } = filters;
     this.setState({
-      filteredHotels: hotels.filter((hotel)=>{
-        (!hotel.availabilityFrom || Moment(hotel.availabilityFrom).isSameOrBefore(dateFrom, "day")) &&
-        (!hotel.availabilityTo || Moment(hotel.availabilityTo).isSameOrAfter(dateTo, "day")) && 
-        (!hotel.price || hotel.price === parseInt(price)) &&
-        (!hotel.country || hotel.country === country) &&
-        (!hotel.rooms || hotel.rooms === rooms)
-      })
+      filteredHotels: hotels.filter((hotel) => {
+        console.log(filters);
+        return (
+          Moment(hotel.availabilityFrom).isSameOrBefore(dateFrom, "day") &&
+          Moment(hotel.availabilityTo).isSameOrAfter(dateTo, "day") &&
+          (!hotel.price || hotel.price === price) &&
+          (!hotel.country || hotel.country === country) &&
+          (!hotel.rooms || hotel.rooms <= rooms)
+        );
+      }),
     });
   };
   componentDidMount() {

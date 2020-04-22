@@ -16,7 +16,6 @@ const Filters = ({
   const handleOptionsChange = (event) => {
     const payload = filters;
     payload[event.target.name] = event.target.name === "country" ? event.target.value : +event.target.value;
-    console.log(payload);
     onFilterChange(payload);
   };
   const handleDateChange = (event) => {

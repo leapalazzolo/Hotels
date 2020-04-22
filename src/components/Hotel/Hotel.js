@@ -41,7 +41,7 @@ const Hotel = ({
               <span className="tag is-medium is-info">
                 <i className="fas fa-bed"></i>
               </span>
-              <span className="tag is-medium">{rooms + "Habitaciones"}</span>
+              <span className="tag is-medium">{rooms + " Habitaciones"}</span>
             </div>
           </div>
           <div className="control">
