@@ -9,7 +9,7 @@ import Hero from "./components/Hero";
 import Filters from "./components/Filters";
 import Hotels from "./components/Hotels";
 import Loader from "./components/Loader";
-import Error from "./components/Error";
+import Message from "./components/Message";
 
 class App extends React.Component {
   constructor(props) {
@@ -117,33 +117,14 @@ class App extends React.Component {
   filterHotels = () => {
     const { hotels, filters } = this.state;
     const { dateFrom, dateTo, price, country, rooms } = filters;
-    const filteredHotelsByDateFrom = dateFrom
-      ? hotels.filter((hotel) =>
-          Moment(hotel.availabilityFrom).isSameOrBefore(dateFrom, "day")
-        )
-      : hotels;
-    const filteredHotelsByDateTo = dateTo
-      ? hotels.filter((hotel) =>
-          Moment(hotel.availabilityTo).isSameOrAfter(dateTo, "day")
-        )
-      : hotels;
-    const filteredHotelsByPrice = price
-      ? hotels.filter((hotel) => hotel.price === parseInt(price))
-      : hotels;
-    const filteredHotelsByCountry = country
-      ? hotels.filter((hotel) => hotel.country === country)
-      : hotels;
-    const filteredHotelsByRooms = rooms
-      ? hotels.filter((hotel) => hotel.rooms <= parseInt(rooms))
-      : hotels;
     this.setState({
-      filteredHotels: _.intersection(
-        filteredHotelsByDateFrom,
-        filteredHotelsByDateTo,
-        filteredHotelsByPrice,
-        filteredHotelsByCountry,
-        filteredHotelsByRooms
-      ),
+      filteredHotels: hotels.filter((hotel)=>{
+        (!hotel.availabilityFrom || Moment(hotel.availabilityFrom).isSameOrBefore(dateFrom, "day")) &&
+        (!hotel.availabilityTo || Moment(hotel.availabilityTo).isSameOrAfter(dateTo, "day")) && 
+        (!hotel.price || hotel.price === parseInt(price)) &&
+        (!hotel.country || hotel.country === country) &&
+        (!hotel.rooms || hotel.rooms === rooms)
+      })
     });
   };
   componentDidMount() {
@@ -206,12 +187,12 @@ class App extends React.Component {
           !errorApi ? (
             <Loader />
           ) : (
-            <Error {...errors.danger} />
+            <Message {...errors.danger} />
           )
         ) : filteredHotels.length ? (
           <Hotels data={filteredHotels} />
         ) : (
-          <Error {...errors.warning} />
+          <Message {...errors.warning} />
         )}
       </div>
     );
