@@ -9,6 +9,7 @@ import Hero from "./components/Hero";
 import Filters from "./components/Filters";
 import Hotels from "./components/Hotels";
 import Loader from "./components/Loader";
+import Error from "./components/Error";
 
 class App extends React.Component {
   constructor(props) {
@@ -38,8 +39,19 @@ class App extends React.Component {
         rooms: [],
       },
       filteredHotels: [],
-      notFoundMessage:
-        "No se han encontrado hoteles que coincidan con los parámetros de búsqueda.",
+      errorApi: null,
+      errors: {
+        danger: {
+          message: "Error obteniendo hoteles. Vuelva más tarde.",
+          type: "danger",
+        },
+        warning: {
+          message:
+            "No se han encontrado hoteles que coincidan con los parámetros de búsqueda.",
+          type: "warning",
+        },
+      },
+
       isAllLoaded: false,
       title: "Hotels",
     };
@@ -157,7 +169,11 @@ class App extends React.Component {
 
         this.generateOptions();
       })
-      .catch((e) => console.log("Error en la petición..." + e));
+      .catch((e) => {
+        this.setState({
+          error: true,
+        });
+      });
   }
   warning() {
     return (
@@ -176,7 +192,8 @@ class App extends React.Component {
       dateLimits,
       isAllLoaded,
       options,
-      notFoundMessage,
+      errors,
+      errorApi,
     } = this.state;
     return (
       <div className="App">
@@ -185,7 +202,17 @@ class App extends React.Component {
           {...{ filters, dateLimits, ...options }}
           onFilterChange={this.handleFilterChange}
         />
-        {!isAllLoaded ? <Loader /> : <Hotels data={filteredHotels} notFoundMessage={notFoundMessage}/>}
+        {!isAllLoaded ? (
+          !errorApi ? (
+            <Loader />
+          ) : (
+            <Error {...errors.danger} />
+          )
+        ) : filteredHotels.length ? (
+          <Hotels data={filteredHotels} />
+        ) : (
+          <Error {...errors.warning} />
+        )}
       </div>
     );
   }
