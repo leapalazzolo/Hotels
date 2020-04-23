@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import Item from "../Item";
 import Price from "../Price";
@@ -32,7 +33,7 @@ const Hotel = ({
         >
           <Item icon={"map-marker"} data={generateLocationData()} />
           <Item icon={"bed"} data={generateRoomsData()} />
-          <Price stars={price}/>
+          <Price stars={price} />
         </div>
       </div>
       <div className="card-footer">
@@ -42,6 +43,16 @@ const Hotel = ({
       </div>
     </div>
   );
+};
+
+Hotel.propTypes = {
+  name: PropTypes.string.isRequired,
+  photo: PropTypes.string.isRequired,
+  description: PropTypes.string,
+  rooms: PropTypes.number.isRequired,
+  city: PropTypes.string.isRequired,
+  country: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired
 };
 
 export default Hotel;
