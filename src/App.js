@@ -15,8 +15,8 @@ class App extends React.Component {
     this.state = {
       dateLimits: {
         dateFrom: {
-          min: Moment().utc(),
-          max: Moment().utc().add(3, "month"),
+          min: Moment(),
+          max: Moment().add(3, "month"),
         },
         dateTo: {
           min: null,
@@ -24,8 +24,8 @@ class App extends React.Component {
         },
       },
       filters: {
-        dateFrom: Moment().utc(),
-        dateTo: Moment().utc().add(1, "week"),
+        dateFrom: Moment(),
+        dateTo: Moment().add(1, "day"),
         country: null,
         price: null,
         rooms: null,
@@ -44,8 +44,7 @@ class App extends React.Component {
           type: "danger",
         },
         warning: {
-          message:
-            "Mmmm, no encontramos hoteles. Probá otros filtros! ",
+          message: "Mmmm, no encontramos hoteles. Probá otros filtros! ",
           type: "warning",
         },
       },
