@@ -49,7 +49,6 @@ class App extends React.Component {
           type: "warning",
         },
       },
-
       isAllLoaded: false,
       title: "Hotels",
     };
@@ -59,9 +58,9 @@ class App extends React.Component {
 
     const roomsFilter = [
       { value: null, name: "Cualquier tamaño" },
-      { value: 15, name: "Hotel pequeño" },
-      { value: 25, name: "Hotel mediano" },
-      { value: 45, name: "Hotel grande" },
+      { value: 10, name: "Hotel pequeño" },
+      { value: 20, name: "Hotel mediano" },
+      { value: 30, name: "Hotel grande" },
     ];
 
     const countriesFilter = countries.sort().map((country) => {
@@ -89,10 +88,10 @@ class App extends React.Component {
   };
 
   updateDateToLimits = () => {
-    const { dateFrom } = this.state.filters;
+    const { filters } = this.state;
     const dateTo = {
-      min: Moment(dateFrom).add(1, "day"),
-      max: Moment(dateFrom).add(1, "day").add(3, "month"),
+      min: Moment(filters.dateFrom).add(1, "day"),
+      max: Moment(filters.dateFrom).add(1, "day").add(3, "month"),
     };
     this.setState((prevState) => ({
       dateLimits: {
@@ -102,8 +101,8 @@ class App extends React.Component {
     }));
   };
   handleFilterChange = (payload) => {
-    const { dateTo } = this.state.filters;
-    if (Moment(payload.dateFrom).isSameOrAfter(dateTo)) {
+    const { filters } = this.state;
+    if (Moment(payload.dateFrom).isSameOrAfter(filters.dateTo)) {
       payload.dateTo = Moment(payload.dateFrom).add(1, "day");
     }
     this.setState({
@@ -126,8 +125,6 @@ class App extends React.Component {
         (!filters.rooms || hotel.rooms <= filters.rooms)
       );
     });
-
-    console.log(newHotels);
     this.setState({
       filteredHotels: newHotels,
     });

@@ -29,7 +29,7 @@ const Filters = ({
         <DateFilter
           name={"dateFrom"}
           date={dateFrom}
-          icon="sign-in-alt"
+          icon={"sign-in-alt"}
           onDateChange={handleDateChange}
           dateLimits={dateLimits.dateFrom}
         />
@@ -38,7 +38,7 @@ const Filters = ({
         <DateFilter
           name={"dateTo"}
           date={dateTo}
-          icon="sign-out-alt"
+          icon={"sign-out-alt"}
           onDateChange={handleDateChange}
           dateLimits={dateLimits.dateTo}
         />
