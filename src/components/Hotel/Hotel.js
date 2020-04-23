@@ -15,7 +15,7 @@ const Hotel = ({
   const generateLocationData = () => city + ", " + country;
   const generateRoomsData = () => rooms + " Habitaciones";
   const generatePriceData = () => {
-    const priceComponents = [...Array(4)].map((v, i) => {
+    return [...Array(4)].map((v, i) => {
       if (price >= i + 1) {
         return (
           <i
@@ -34,7 +34,6 @@ const Hotel = ({
         );
       }
     });
-    return priceComponents;
   };
   return (
     <div className="card">
@@ -55,25 +54,7 @@ const Hotel = ({
           <div className="control">
             <div className="tags">
               <span className="tag is-medium is-info">
-                {[...Array(4)].map((v, i) => {
-                  if (price >= i + 1) {
-                    return (
-                      <i
-                        key={`${slug}${i}`}
-                        className="fas fa-dollar-sign"
-                        style={{ margin: "0 .125em" }}
-                      ></i>
-                    );
-                  } else {
-                    return (
-                      <i
-                        key={`${slug}${i}`}
-                        className="fas fa-dollar-sign"
-                        style={{ margin: "0 .125em", opacity: ".25" }}
-                      ></i>
-                    );
-                  }
-                })}
+                {generatePriceData()}
               </span>
             </div>
           </div>

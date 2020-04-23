@@ -16,6 +16,6 @@ const Item = ({ icon, data }) => {
 
 Item.propTypes = {
   icon: PropTypes.string.isRequired,
-  data: PropTypes.object,
+  data: PropTypes.string,
 };
 export default Item;

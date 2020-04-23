@@ -1,9 +1,7 @@
 import React from "react";
 import Moment from "moment";
-import _ from "lodash";
 
 import "./App.css";
-import logo from "./logo.svg";
 
 import Hero from "./components/Hero";
 import Filters from "./components/Filters";
@@ -42,12 +40,12 @@ class App extends React.Component {
       errorApi: null,
       errors: {
         danger: {
-          message: "Error obteniendo hoteles. Vuelva más tarde.",
+          message: "Oops, no encontramos hotels. Volvé más tarde!",
           type: "danger",
         },
         warning: {
           message:
-            "No se han encontrado hoteles que coincidan con los parámetros de búsqueda.",
+            "Mmmm, no encontramos hoteles. Probá otros filtros! ",
           type: "warning",
         },
       },
@@ -61,9 +59,9 @@ class App extends React.Component {
 
     const roomsFilter = [
       { value: null, name: "Cualquier tamaño" },
-      { value: 10, name: "Hotel pequeño" },
-      { value: 20, name: "Hotel mediano" },
-      { value: 30, name: "Hotel grande" },
+      { value: 15, name: "Hotel pequeño" },
+      { value: 25, name: "Hotel mediano" },
+      { value: 45, name: "Hotel grande" },
     ];
 
     const countriesFilter = countries.sort().map((country) => {
@@ -118,14 +116,17 @@ class App extends React.Component {
     const { hotels, filters } = this.state;
     const newHotels = hotels.filter((hotel) => {
       return (
-        Moment(hotel.availabilityFrom).isSameOrBefore(filters.dateFrom, "day") &&
+        Moment(hotel.availabilityFrom).isSameOrBefore(
+          filters.dateFrom,
+          "day"
+        ) &&
         Moment(hotel.availabilityTo).isSameOrAfter(filters.dateTo, "day") &&
         (!filters.price || hotel.price === filters.price) &&
         (!filters.country || hotel.country === filters.country) &&
         (!filters.rooms || hotel.rooms <= filters.rooms)
       );
     });
-    
+
     console.log(newHotels);
     this.setState({
       filteredHotels: newHotels,
@@ -133,14 +134,23 @@ class App extends React.Component {
   };
   componentDidMount() {
     this.updateDateToLimits();
+    let timeOutError = false;
+    const timeout = setTimeout(() => {
+      timeOutError = true;
+    }, 5000);
     fetch(
       "https://wt-8a099f3e7c73b2d17f4e018b6cfd6131-0.sandbox.auth0-extend.com/acamica"
     )
-      .then((hotels) => hotels.json())
+      .then((hotels) => {
+        timeout && clearTimeout(timeout);
+        if (!timeOutError) {
+          return hotels.json();
+        }
+      })
       .then((hotels) => {
         const prices = [],
           countries = [];
-        hotels.map((hotel) => {
+        hotels.forEach((hotel) => {
           if (!prices.includes(hotel.price)) prices.push(hotel.price);
           if (!countries.includes(hotel.country)) countries.push(hotel.country);
         });
@@ -154,6 +164,7 @@ class App extends React.Component {
         this.generateOptions();
       })
       .catch((e) => {
+        timeout && clearTimeout(timeout);
         this.setState({
           errorApi: true,
         });
@@ -178,17 +189,21 @@ class App extends React.Component {
           {...{ filters, dateLimits, ...options }}
           onFilterChange={this.handleFilterChange}
         />
-        {!isAllLoaded ? (
-          !errorApi ? (
-            <Loader />
-          ) : (
-            <Message {...errors.danger} />
-          )
-        ) : filteredHotels.length ? (
-          <Hotels data={filteredHotels} />
-        ) : (
-          <Message {...errors.warning} />
-        )}
+        <section className="section" style={{ marginTop: "1em" }}>
+          <div className="container">
+            {!isAllLoaded ? (
+              !errorApi ? (
+                <Loader />
+              ) : (
+                <Message {...errors.danger} />
+              )
+            ) : filteredHotels.length ? (
+              <Hotels data={filteredHotels} />
+            ) : (
+              <Message {...errors.warning} />
+            )}
+          </div>
+        </section>
       </div>
     );
   }
