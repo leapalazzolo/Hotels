@@ -1,6 +1,7 @@
 import React from "react";
 
 import Item from "../Item";
+import Price from "../Price";
 
 const Hotel = ({
   slug,
@@ -14,27 +15,7 @@ const Hotel = ({
 }) => {
   const generateLocationData = () => city + ", " + country;
   const generateRoomsData = () => rooms + " Habitaciones";
-  const generatePriceData = () => {
-    return [...Array(4)].map((v, i) => {
-      if (price >= i + 1) {
-        return (
-          <i
-            key={`${slug}${i}`}
-            className="fas fa-dollar-sign"
-            style={{ margin: "0 .125em" }}
-          ></i>
-        );
-      } else {
-        return (
-          <i
-            key={`${slug}${i}`}
-            className="fas fa-dollar-sign"
-            style={{ margin: "0 .125em", opacity: ".25" }}
-          ></i>
-        );
-      }
-    });
-  };
+
   return (
     <div className="card">
       <div className="card-image">
@@ -51,13 +32,7 @@ const Hotel = ({
         >
           <Item icon={"map-marker"} data={generateLocationData()} />
           <Item icon={"bed"} data={generateRoomsData()} />
-          <div className="control">
-            <div className="tags">
-              <span className="tag is-medium is-info">
-                {generatePriceData()}
-              </span>
-            </div>
-          </div>
+          <Price stars={price}/>
         </div>
       </div>
       <div className="card-footer">
