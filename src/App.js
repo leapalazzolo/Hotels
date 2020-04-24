@@ -155,8 +155,9 @@ class App extends React.Component {
           isAllLoaded: true,
           prices: prices,
           countries: countries,
+          filteredHotels: hotels //Para que se vean los 18 hoteles al comienzo
         });
-        this.filterHotels();
+        //this.filterHotels(); Para que no se vean filtrados al cargar
         this.generateOptions();
       })
       .catch((e) => {
